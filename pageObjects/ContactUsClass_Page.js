@@ -8,6 +8,13 @@ class ContactUs_Page {
 	get successfulSubmissionSelector() {return $("#contact_reply h1")};
 	get unsuccessfulSubmissionSelector() {return $('body')};
 
+	get successfulSubmissionSelectorText() {
+		return this.successfulSubmissionSelector.getText();
+	};
+	get unsuccessfulSubmissionSelectorText() {
+		return this.unsuccessfulSubmissionSelector.getText();
+	};
+
 	setFirstName(firstName) {
 		return this.firstName.setValue(firstName);
 	};
@@ -41,25 +48,9 @@ class ContactUs_Page {
 		if(comments) {
 			this.comments.setValue(comments);
 		}
-
 		this.submitButton.click();
-		this.confirmSuccessfulSubmission();
-	};
 
-	confirmSuccessfulSubmission() {
-		var successfulSubmissionSelector = this.successfulSubmissionSelector;
-		var validateSubmissionHeader = browser.waitUntil(function() {
-			return successfulSubmissionSelector.getText() == "Thank You for your Message!";
-		}, 3000)
-		expect(validateSubmissionHeader, "successful submission Message does not exist!").to.be.true;
-	};
 
-	confirmUnsuccessfulSubmission() {
-		var unsuccessfulSubmissionSelector = this.unsuccessfulSubmissionSelector;
-		var validateSubmissionHeader = browser.waitUntil(function() {
-			return unsuccessfulSubmissionSelector.getText().includes('Error: all fields are required')
-		}, 3000)
-		expect(unsuccessfulSubmissionSelector.getText()).to.include('Error: all fields are required');
 	};
 }
 
